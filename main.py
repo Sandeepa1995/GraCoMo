@@ -5,19 +5,23 @@ import math
 
 import subprocess
 
-graphit_path = "/home/damitha/CLionProjects/graphit/"
+# graphit_path = "/home/damitha/CLionProjects/graphit/"
+graphit_path = "/home/damitha2/graphit/"
 graphitc_path = graphit_path + "build/bin/graphitc.py"
 runtime_path = graphit_path + "src/runtime_lib/"
 
-current_path = "/home/damitha/PycharmProjects/GraCoMo/"
+# current_path = "/home/damitha/PycharmProjects/GraCoMo/"
+current_path = "/home/damitha2/GraCoMo/"
 algo_path = current_path + "bfs_benchmark.gt"
 shed_path = current_path + "shed.gt"
-inp_path = current_path + "out.el"
+inp_prefix = current_path + "data/out"
+inp_suffix = ".el"
 data_path = current_path + "data"
 graphitcpp_path = current_path + "test.cpp"
 graphito_path = current_path + "test"
 
-parmat_path = "/home/damitha/CLionProjects/PaRMAT/Release/PaRMAT"
+# parmat_path = "/home/damitha/CLionProjects/PaRMAT/Release/PaRMAT"
+parmat_path = "/home/damitha2/PaRMAT/Release/PaRMAT"
 
 # TODO check if no schedule is always correct
 
@@ -322,20 +326,28 @@ def gen_shed(s):
 
 
 if __name__ == '__main__':
-    graphs_at_config = 10
+    graphs_at_config = [
+        ["0.45", "0.22", "0.22"],
+        ["0.7", "0.1", "0.1"],
+        ["0.25", "0.25", "0.25"],
+        ["0.40", "0.40", "0.1"],
+        ["0.3", "0.3", "0.3"]
+    ]
     all_possible_sheds = gen_all_scheds()
 
     # TODO for actual runs make max nodes 1 MIL and edge mul 1 K
     min_nodes = 1000
-    max_nodes = 10000000
+    max_nodes = 1000000
 
     min_mul_edge = 10
-    max_mul_edge = 10000
+    max_mul_edge = 1000
 
     node_r = int(math.log(max_nodes) // math.log(10)) - int(math.log(min_nodes) // math.log(10)) + 1
     edge_r = int(math.log(max_mul_edge) // math.log(10)) - int(math.log(min_mul_edge) // math.log(10)) + 2
 
     total_calcs = 0
+
+    res1 = os.system("mkdir data")
 
     d_f = open(data_path, "w")
     for nr in range(node_r):
@@ -344,13 +356,15 @@ if __name__ == '__main__':
         for er in range(edge_r):
             edge_val = node_val * min_mul_edge * (10**er)
             # Removed the node^2 > edges check here
-            for cg in range(graphs_at_config):
+            for cg in graphs_at_config:
+                inp_name = str(node_val) + "_" + str(edge_val) + "_" + cg[0] + "_" + cg[1] + "_" + cg[2]
+                inp_path = inp_prefix + inp_name + inp_suffix
                 res1 = os.system(parmat_path + " -nVertices " + str(node_val) + " -nEdges "
-                                 + str(edge_val) + " -output " + inp_path)
+                                 + str(edge_val) + " -output " + inp_path + " -a " + cg[0]
+                                 + " -b " + cg[1] + " -c " + cg[2])
 
                 if res1 == 0:
                     # Generate schedule here
-                    sh = all_possible_sheds[-1]
                     for sh in all_possible_sheds:
                         if sh[4][0] != 0:
                             continue
@@ -380,7 +394,7 @@ if __name__ == '__main__':
                                               + str(sh[1][0]) + "," + str(sh[1][1]) + ","
                                               + str(sh[2][0]) + "," + str(sh[2][1]) + "," + str(sh[2][2]) + ","
                                               + str(node_val) + "," + str(edge_val) + ","
-                                              + '{:.7f}'.format(t1/nm))
+                                              + '{:.7f}'.format(t1/nm) + "," + inp_name + "\n")
                                 # d_f.write(str(sh[0][0]) + ","
                                 #           + str(sh[1][0]) + "," + str(sh[1][1]) + ","
                                 #           + str(sh[2][0]) + "," + str(sh[2][1]) + "," + str(sh[2][2]) + ","
