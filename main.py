@@ -5,13 +5,13 @@ import math
 
 import subprocess
 
-graphit_path = "/home/damitha/CLionProjects/graphit/"
-# graphit_path = "/home/damitha2/graphit/"
+# graphit_path = "/home/damitha/CLionProjects/graphit/"
+graphit_path = "/home/damitha2/graphit/"
 graphitc_path = graphit_path + "build/bin/graphitc.py"
 runtime_path = graphit_path + "src/runtime_lib/"
 
-current_path = "/home/damitha/PycharmProjects/GraCoMo/"
-# current_path = "/home/damitha2/GraCoMo/"
+# current_path = "/home/damitha/PycharmProjects/GraCoMo/"
+current_path = "/home/damitha2/GraCoMo/"
 algo_path = current_path + "bfs_benchmark.gt"
 shed_path = current_path + "shed.gt"
 inp_folder = current_path + "data_save/"
@@ -21,8 +21,8 @@ data_path = current_path + "data"
 graphitcpp_path = current_path + "test.cpp"
 graphito_path = current_path + "test"
 
-parmat_path = "/home/damitha/CLionProjects/PaRMAT/Release/PaRMAT"
-# parmat_path = "/home/damitha2/PaRMAT/Release/PaRMAT"
+# parmat_path = "/home/damitha/CLionProjects/PaRMAT/Release/PaRMAT"
+parmat_path = "/home/damitha2/PaRMAT/Release/PaRMAT"
 
 # TODO check if no schedule is always correct
 
