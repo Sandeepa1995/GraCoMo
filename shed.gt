@@ -1,0 +1,5 @@
+schedule:
+	program
+	->configApplyDirection("s1", "DensePush-SparsePush")
+	->configApplyParallelization("s1", "edge-aware-dynamic-vertex-parallel", 256)
+	->configApplyDenseVertexSet("s1","bitvector", "src-vertexset", "DensePush-SparsePush");
