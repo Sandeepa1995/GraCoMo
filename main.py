@@ -41,10 +41,9 @@ dict_dirs = {
 # 1
 dict_apply_dir = {
     0: "SparsePush",
-    1: "DensePush",
-    2: "DensePull",
-    3: "DensePull-SparsePush",
-    4: "DensePush-SparsePush"
+    1: "DensePull",
+    2: "DensePull-SparsePush",
+    3: "DensePush-SparsePush"
 }
 
 # 2, needs dir
@@ -267,7 +266,7 @@ def gen_all_scheds_ssg():
 
 def gen_all_scheds():
     all_sheds =[]
-    for x1 in range(5):
+    for x1 in range(4):
         for x2 in range(4):
             if x2 != 0:
                 for x2_1 in [1, 8, 16, 64, 256]:   # Problems: Grain size, default is 256?? (That's big)
@@ -396,15 +395,13 @@ if __name__ == '__main__':
                                               + str(sh[2][0]) + "," + str(sh[2][1]) + "," + str(sh[2][2]) + ","
                                               + str(node_val) + "," + str(edge_val) + ","
                                               + '{:.7f}'.format(t1/nm) + "," + inp_name + "\n")
+                                    d_f.flush()
                                 # d_f.write(str(sh[0][0]) + ","
                                 #           + str(sh[1][0]) + "," + str(sh[1][1]) + ","
                                 #           + str(sh[2][0]) + "," + str(sh[2][1]) + "," + str(sh[2][2]) + ","
                                 #           + str(sh[3][0]) + "," + str(sh[3][1]) + "," + str(sh[3][2]) + ","
                                 #           + str(node_val) + "," + str(edge_val) + ","
                                 #           + str(time.time() - t1) + "\
-                break
-            break
-        break
 
     # d_f.close()
     print(len(all_possible_sheds))
