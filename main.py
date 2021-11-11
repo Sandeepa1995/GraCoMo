@@ -351,36 +351,36 @@ if __name__ == '__main__':
                 if res1 == 0:
                     # Generate schedule here
                     sh = all_possible_sheds[-1]
-                    # for sh in all_possible_sheds:
-                    if sh[4][0] != 0:
-                        continue
-                    else:
-                        gen_shed(sh)
-                        tt1 = time.time()
-                        res2 = os.system("python " + graphitc_path + " -a " +
-                                         algo_path + " -f " + shed_path + " -o " + graphitcpp_path)
-                        if res2 == 0:
-                            tt2 = time.time()
-                            res3 = os.system("g++ -std=c++14 -I " + runtime_path +
-                                             " -O3 " + graphitcpp_path + " -o " + graphito_path)
-                            if res3 == 0:
-                                total_calcs += 1
-                                cnt = 0
-                                nm = 0
-                                t1 = 0
-                                cmd = [graphito_path, inp_path]
-                                res4 = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-                                for line in iter(res4.stdout.readline, b''):
-                                    if cnt > 2:
-                                        t1 += float(line.rstrip().decode('utf-8'))
-                                        nm += 1
-                                    cnt += 1
-                                feat_data = [node_val, edge_val]
-                                d_f.write(str(sh[0][0]) + ","
-                                          + str(sh[1][0]) + "," + str(sh[1][1]) + ","
-                                          + str(sh[2][0]) + "," + str(sh[2][1]) + "," + str(sh[2][2]) + ","
-                                          + str(node_val) + "," + str(edge_val) + ","
-                                          + '{:.7f}'.format(t1/nm))
+                    for sh in all_possible_sheds:
+                        if sh[4][0] != 0:
+                            continue
+                        else:
+                            gen_shed(sh)
+                            tt1 = time.time()
+                            res2 = os.system("python " + graphitc_path + " -a " +
+                                             algo_path + " -f " + shed_path + " -o " + graphitcpp_path)
+                            if res2 == 0:
+                                tt2 = time.time()
+                                res3 = os.system("g++ -std=c++14 -I " + runtime_path +
+                                                 " -O3 " + graphitcpp_path + " -o " + graphito_path)
+                                if res3 == 0:
+                                    total_calcs += 1
+                                    cnt = 0
+                                    nm = 0
+                                    t1 = 0
+                                    cmd = [graphito_path, inp_path]
+                                    res4 = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+                                    for line in iter(res4.stdout.readline, b''):
+                                        if cnt > 2:
+                                            t1 += float(line.rstrip().decode('utf-8'))
+                                            nm += 1
+                                        cnt += 1
+                                    feat_data = [node_val, edge_val]
+                                    d_f.write(str(sh[0][0]) + ","
+                                              + str(sh[1][0]) + "," + str(sh[1][1]) + ","
+                                              + str(sh[2][0]) + "," + str(sh[2][1]) + "," + str(sh[2][2]) + ","
+                                              + str(node_val) + "," + str(edge_val) + ","
+                                              + '{:.7f}'.format(t1/nm))
                                 # d_f.write(str(sh[0][0]) + ","
                                 #           + str(sh[1][0]) + "," + str(sh[1][1]) + ","
                                 #           + str(sh[2][0]) + "," + str(sh[2][1]) + "," + str(sh[2][2]) + ","
