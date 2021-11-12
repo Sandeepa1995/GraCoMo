@@ -367,7 +367,7 @@ if __name__ == '__main__':
                 if exists(inp_path):
                     # Generate schedule here
                     for sh in all_possible_sheds:
-                        if sh[3][0] != 0:
+                        if sh[4][0] != 0:
                             continue
                         else:
                             gen_shed(sh)
@@ -376,7 +376,7 @@ if __name__ == '__main__':
                                              algo_path + " -f " + shed_path + " -o " + graphitcpp_path)
                             if res2 == 0:
                                 tt2 = time.time()
-                                res3 = os.system("g++ -std=c++14 -I " + runtime_path +
+                                res3 = os.system("g++ -I " + runtime_path +
                                                  " -O3 " + graphitcpp_path + " -o " + graphito_path)
                                 if res3 == 0:
                                     total_calcs += 1
