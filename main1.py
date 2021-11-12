@@ -1,28 +1,29 @@
 import os
+from os.path import exists
 import time
 
 import math
 
 import subprocess
 
-graphit_path = "/home/damitha/CLionProjects/graphit/"
-# graphit_path = "/home/damitha2/graphit/"
+# graphit_path = "/home/damitha/CLionProjects/graphit/"
+graphit_path = "/home/damitha2/graphit/"
 graphitc_path = graphit_path + "build/bin/graphitc.py"
 runtime_path = graphit_path + "src/runtime_lib/"
 
-current_path = "/home/damitha/PycharmProjects/GraCoMo/"
-# current_path = "/home/damitha2/GraCoMo/"
+# current_path = "/home/damitha/PycharmProjects/GraCoMo/"
+current_path = "/home/damitha2/GraCoMo/"
 algo_path = current_path + "bfs_benchmark.gt"
 shed_path = current_path + "shed.gt"
 inp_folder = current_path + "data_save/"
 inp_prefix = inp_folder + "out"
 inp_suffix = ".el"
-data_path = current_path + "data"
+data_path = current_path + "data1"
 graphitcpp_path = current_path + "test.cpp"
 graphito_path = current_path + "test"
 
-parmat_path = "/home/damitha/CLionProjects/PaRMAT/Release/PaRMAT"
-# parmat_path = "/home/damitha2/PaRMAT/Release/PaRMAT"
+# parmat_path = "/home/damitha/CLionProjects/PaRMAT/Release/PaRMAT"
+parmat_path = "/home/damitha2/PaRMAT/Release/PaRMAT"
 
 # TODO check if no schedule is always correct
 
@@ -347,9 +348,9 @@ if __name__ == '__main__':
 
     total_calcs = 0
 
-    res1 = os.system("mkdir data_save")
+    # res1 = os.system("mkdir data_save")
 
-    # d_f = open(data_path, "w")
+    d_f = open(data_path, "w")
     for nr in range(node_r):
         node_val = min_nodes * (10**nr)
 
@@ -359,50 +360,50 @@ if __name__ == '__main__':
             for cg in graphs_at_config:
                 inp_name = str(node_val) + "_" + str(edge_val) + "_" + cg[0] + "_" + cg[1] + "_" + cg[2]
                 inp_path = inp_prefix + inp_name + inp_suffix
-                res1 = os.system(parmat_path + " -nVertices " + str(node_val) + " -nEdges "
-                                 + str(edge_val) + " -output " + inp_path + " -a " + cg[0]
-                                 + " -b " + cg[1] + " -c " + cg[2])
+                # res1 = os.system(parmat_path + " -nVertices " + str(node_val) + " -nEdges "
+                #                  + str(edge_val) + " -output " + inp_path + " -a " + cg[0]
+                #                  + " -b " + cg[1] + " -c " + cg[2])
 
-    #             if res1 == 0:
-    #                 # Generate schedule here
-    #                 for sh in all_possible_sheds:
-    #                     if sh[4][0] != 0:
-    #                         continue
-    #                     else:
-    #                         gen_shed(sh)
-    #                         tt1 = time.time()
-    #                         res2 = os.system("python " + graphitc_path + " -a " +
-    #                                          algo_path + " -f " + shed_path + " -o " + graphitcpp_path)
-    #                         if res2 == 0:
-    #                             tt2 = time.time()
-    #                             res3 = os.system("g++ -std=c++14 -I " + runtime_path +
-    #                                              " -O3 " + graphitcpp_path + " -o " + graphito_path)
-    #                             if res3 == 0:
-    #                                 total_calcs += 1
-    #                                 cnt = 0
-    #                                 nm = 0
-    #                                 t1 = 0
-    #                                 cmd = [graphito_path, inp_path]
-    #                                 res4 = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-    #                                 for line in iter(res4.stdout.readline, b''):
-    #                                     if cnt > 2:
-    #                                         t1 += float(line.rstrip().decode('utf-8'))
-    #                                         nm += 1
-    #                                     cnt += 1
-    #                                 feat_data = [node_val, edge_val]
-    #                                 d_f.write(str(sh[0][0]) + ","
-    #                                           + str(sh[1][0]) + "," + str(sh[1][1]) + ","
-    #                                           + str(sh[2][0]) + "," + str(sh[2][1]) + "," + str(sh[2][2]) + ","
-    #                                           + str(node_val) + "," + str(edge_val) + ","
-    #                                           + '{:.7f}'.format(t1/nm) + "," + inp_name + "\n")
-    #                                 d_f.flush()
-    #                             # d_f.write(str(sh[0][0]) + ","
-    #                             #           + str(sh[1][0]) + "," + str(sh[1][1]) + ","
-    #                             #           + str(sh[2][0]) + "," + str(sh[2][1]) + "," + str(sh[2][2]) + ","
-    #                             #           + str(sh[3][0]) + "," + str(sh[3][1]) + "," + str(sh[3][2]) + ","
-    #                             #           + str(node_val) + "," + str(edge_val) + ","
-    #                             #           + str(time.time() - t1) + "\
-    #
-    # # d_f.close()
+                if exists(inp_path):
+                    # Generate schedule here
+                    for sh in all_possible_sheds:
+                        if sh[3][0] != 0:
+                            continue
+                        else:
+                            gen_shed(sh)
+                            tt1 = time.time()
+                            res2 = os.system("python " + graphitc_path + " -a " +
+                                             algo_path + " -f " + shed_path + " -o " + graphitcpp_path)
+                            if res2 == 0:
+                                tt2 = time.time()
+                                res3 = os.system("g++ -std=c++14 -I " + runtime_path +
+                                                 " -O3 " + graphitcpp_path + " -o " + graphito_path)
+                                if res3 == 0:
+                                    total_calcs += 1
+                                    cnt = 0
+                                    nm = 0
+                                    t1 = 0
+                                    cmd = [graphito_path, inp_path]
+                                    res4 = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+                                    for line in iter(res4.stdout.readline, b''):
+                                        if cnt > 2:
+                                            t1 += float(line.rstrip().decode('utf-8'))
+                                            nm += 1
+                                        cnt += 1
+                                    feat_data = [node_val, edge_val]
+                                    d_f.write(str(sh[0][0]) + ","
+                                              + str(sh[1][0]) + "," + str(sh[1][1]) + ","
+                                              + str(sh[2][0]) + "," + str(sh[2][1]) + "," + str(sh[2][2]) + ","
+                                              + str(node_val) + "," + str(edge_val) + ","
+                                              + '{:.7f}'.format(t1/nm) + "," + inp_name + "\n")
+                                    d_f.flush()
+                                # d_f.write(str(sh[0][0]) + ","
+                                #           + str(sh[1][0]) + "," + str(sh[1][1]) + ","
+                                #           + str(sh[2][0]) + "," + str(sh[2][1]) + "," + str(sh[2][2]) + ","
+                                #           + str(sh[3][0]) + "," + str(sh[3][1]) + "," + str(sh[3][2]) + ","
+                                #           + str(node_val) + "," + str(edge_val) + ","
+                                #           + str(time.time() - t1) + "\
+
+    # d_f.close()
     # print(len(all_possible_sheds))
     print(total_calcs)
