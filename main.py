@@ -327,17 +327,17 @@ def gen_shed(s):
 
 if __name__ == '__main__':
     graphs_at_config = [
-        ["0.45", "0.22", "0.22"],
-        ["0.7", "0.1", "0.1"],
-        ["0.25", "0.25", "0.25"],
-        ["0.40", "0.40", "0.1"],
-        ["0.3", "0.3", "0.3"]
+        ["0.45", "0.22", "0.22"]
+        # ["0.7", "0.1", "0.1"],
+        # ["0.25", "0.25", "0.25"],
+        # ["0.40", "0.40", "0.1"],
+        # ["0.3", "0.3", "0.3"]
     ]
     all_possible_sheds = gen_all_scheds()
 
     # TODO for actual runs make max nodes 1 MIL and edge mul 1 K
     min_nodes = 1000
-    max_nodes = 1000000
+    max_nodes = 100000
 
     min_mul_edge = 10
     max_mul_edge = 1000
