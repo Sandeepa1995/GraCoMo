@@ -1,5 +1,5 @@
 schedule:
 	program
 	->configApplyDirection("s1", "SparsePush")
-	->configApplyParallelization("s1", "dynamic-vertex-parallel", 1)
-	->configApplyDenseVertexSet("s1","bitvector", "src-vertexset", "DensePull-SparsePush");
+	->configApplyParallelization("s1", "serial")
+	->configApplyDenseVertexSet("s1","bitvector", "src-vertexset", "DensePush");
